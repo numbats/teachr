@@ -25,6 +25,8 @@ An R package to aid teaching of introduction to R
 6. Basics of plotting in R with `ggplot2`
 7. Functional mapping in R with `purrr`
 8. How to ask for help (`reprex`)
+9. Basic linear regression with `lm()` and summary statistics with `summary()`
+10. Basic R Markdown
 
 
 ## Goals 
