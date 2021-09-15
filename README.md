@@ -11,6 +11,7 @@ An R package to aid teaching of introduction to R
 * Look at:
   * `learnr`
   * `gradethis`
+  * `swirl`
   * R exams http://www.r-exams.org/
 
 
