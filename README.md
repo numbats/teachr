@@ -17,16 +17,19 @@ An R package to aid teaching of introduction to R
 
 ## Topics
 
-1. Installing R + RStudio IDE + tour of RStudio IDE
-2. R Programming Basics (e.g. assignment, basic arithmetics, vectors, list, ...)
-3. R folder and file structure (Setting up R project, tips for best ways to organise analytical projects, etc)
-4. Reading data into R (base + `readr`)
-5. Basics of data cleaning with R using `dplyr` + `tidyr` 
-6. Basics of plotting in R with `ggplot2`
-7. Functional mapping in R with `purrr`
-8. How to ask for help (`reprex`)
-9. Basic linear regression with `lm()` and summary statistics with `summary()`
-10. Basic R Markdown
+1. Installing R + RStudio IDE + tour of RStudio IDE:
+  * PDF Preview -> System viewer
+  * Save workspace to .RData on exit: Never
+  * Untick "Restore .RData into workspace at startup"
+3. R Programming Basics (e.g. assignment, basic arithmetics, vectors, list, ...)
+4. R folder and file structure (Setting up R project, tips for best ways to organise analytical projects, etc)
+5. Reading data into R (base + `readr`)
+6. Basics of data cleaning with R using `dplyr` + `tidyr` 
+7. Basics of plotting in R with `ggplot2`
+8. Functional mapping in R with `purrr`
+9. How to ask for help (`reprex`)
+10. Basic linear regression with `lm()` and summary statistics with `summary()`
+11. Basic R Markdown
 
 
 ## Goals 
