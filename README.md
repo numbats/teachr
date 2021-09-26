@@ -31,6 +31,8 @@ An R package to aid teaching of introduction to R
 10. Basic linear regression with `lm()` and summary statistics with `summary()`
 11. Basic R Markdown
 
+* Create cheatsheets with main points for each topic
+
 
 ## Goals 
 
