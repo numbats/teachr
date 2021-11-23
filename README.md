@@ -15,6 +15,21 @@ An R package to aid teaching of introduction to R
 <!-- devtools::install_github("numbats/teachr") -->
 <!-- ``` -->
 
+```` markdown
+```{teachr substitute}
+z <- mean(<<1:5>>)
+z
+
+---
+  
+Hint: Add a vector inside mean()
+
+???
+
+expect_identical(z, 3)
+```
+````
+
 ## Literature Review
 
 -   Look at existing R packages for teaching statistics and summarise

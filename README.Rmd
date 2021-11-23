@@ -11,6 +11,7 @@ knitr::opts_chunk$set(
   fig.path = "man/figures/README-",
   out.width = "100%"
 )
+library(teachr)
 ```
 
 # teachr
@@ -29,6 +30,20 @@ An R package to aid teaching of introduction to R
 <!-- devtools::install_github("numbats/teachr") -->
 <!-- ``` -->
 
+````markdown
+`r ''````{teachr substitute}
+z <- mean(<<1:5>>)
+z
+
+---
+  
+Hint: Add a vector inside mean()
+
+???
+
+expect_identical(z, 3)
+```
+````
 
 ## Literature Review
 
