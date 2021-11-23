@@ -1,0 +1,19 @@
+Package: teachr
+Title: Create Online Interactive Workshops with R Markdown
+Version: 0.0.0.9000
+Authors@R: 
+    c(person(given = "Mitchell",
+             family = "O'Hara-Wild",
+             email = "mail@mitchelloharawild.com",
+             role = c("aut", "cre"),
+             comment = c(ORCID = "0000-0002-3813-7155")),
+      person(given = "Ines",
+             family = "Montani",
+             role = c("cph"),
+             comment = "Developer of course template"))
+Description: Output formats and helper functions for creating interactive online
+    workshops using R Markdown.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.2
