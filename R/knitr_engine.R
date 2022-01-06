@@ -1,5 +1,6 @@
 teachr_engine <- function(options) {
   code <- options$code
+  outdir <- options$outdir %||% "exercises"
 
   testthat_sep <- cumsum(grepl("^\\?\\?\\?\\s*", code))
   if(testthat_sep[length(testthat_sep)] > 1) {
@@ -39,10 +40,10 @@ teachr_engine <- function(options) {
 
   # Otherwise, create exercise files for the course website
   label <- knitr::opts_current$get()$label
-  xfun::dir_create("exercises")
-  xfun::write_utf8(starter, file.path("exercises", paste0("exc_", label, ".R")))
-  xfun::write_utf8(solution, file.path("exercises", paste0("solution_", label, ".R")))
-  xfun::write_utf8(code$test, file.path("exercises", paste0("test_", label, ".R")))
+  xfun::dir_create(outdir)
+  xfun::write_utf8(starter, file.path(outdir, paste0("exc_", label, ".R")))
+  xfun::write_utf8(solution, file.path(outdir, paste0("solution_", label, ".R")))
+  xfun::write_utf8(code$test, file.path(outdir, paste0("test_", label, ".R")))
   knitr::asis_output(
     paste0(
       '<codeblock id="', label, '">\n',
