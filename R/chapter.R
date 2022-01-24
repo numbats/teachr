@@ -1,0 +1,37 @@
+#' Slide output for the chapter
+#'
+#' @param name The name of the slide without the file extension
+#' @export
+slides <- function(name) {
+  if(knitr::is_html_output(excludes = c("markdown"))) {
+    glue::glue("<iframe src='../slides/{name}.html' width='800' height='500'></iframe>")
+  } else {
+    glue::glue('<slides source="{name}">\n</slides>')
+  }
+}
+
+#' Mulitple choice options for the chapter
+#' @param ... A name-value pair where name shows the text, value shows the
+#'   message. Each pair should be an option.
+#' @param correct The number of the option that is correct.
+#' @export
+mc_opts <- function(..., correct = NULL) {
+  messages <- list(...)
+  text <- names(messages)
+  if(knitr::is_html_output(excludes = c("markdown"))) {
+    out <- '<div>'
+    for(i in seq_along(messages)) {
+      answer <- ifelse(i==correct, '<span style="color:red">CORRECT</span>', '')
+      out <- c(out, glue::glue('<input type="radio"> {text[i]} | {answer} {messages[i]}'))
+    }
+    out <- c(out, "</div>")
+  } else {
+    out <- '<choice>'
+    for(i in seq_along(messages)) {
+      answer <- ifelse(i==correct, 'correct="true"', '')
+      out <- c(out, glue::glue('<opt text="{text[i]}" {answer}>'), messages[i], '</opt>')
+    }
+    out <- c(out, "</choice>")
+  }
+  paste(out, collapse = "\n\n")
+}
