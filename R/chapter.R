@@ -156,3 +156,26 @@ mc_opts <- function(..., correct = NULL) {
   }
   paste(out, collapse = "\n\n")
 }
+
+
+#' The codeblock for the chapter
+#' @param id The id of the codeblock
+#' @param hint The hint.
+#' @export
+codeblock <- function(id, hint) {
+  if(knitr::is_html_output(excludes = c("markdown"))) {
+    out <- c('<pre class="r">',
+             paste("<code>",
+                   readLines(sprintf("../exercises/exc_%s.R", id)),
+                   "</code>"),
+             '</pre>',
+             '<details open><summary>Hint</summary>',
+             hint,
+             '</details>')
+  } else {
+    out <- c(glue::glue('<codeblock id="{id}">'),
+             hint,
+             "</codeblock>")
+  }
+  paste(out, collapse = "\n")
+}
