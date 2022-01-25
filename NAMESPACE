@@ -2,3 +2,6 @@
 
 export(mc_opts)
 export(slides)
+export(teachr_chapter)
+export(teachr_website)
+import(rmarkdown)
