@@ -34,7 +34,7 @@ mc_opts <- function(..., correct = NULL) {
     }
     out <- c(out, "</choice>")
   }
-  paste(out, collapse = "\n\n")
+  knitr::asis_output(paste(out, collapse = "\n\n"))
 }
 
 
@@ -57,5 +57,5 @@ codeblock <- function(id, hint) {
              hint,
              "</codeblock>")
   }
-  paste(out, collapse = "\n")
+  knitr::asis_output(paste(out, collapse = "\n"))
 }
