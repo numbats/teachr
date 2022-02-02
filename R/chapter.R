@@ -21,81 +21,19 @@ teachr_chapter <- function(self_contained = TRUE,
                             md_extensions = NULL,
                             pandoc_args = NULL,
                             ...) {
-  # shared variables
-  site_config <- NULL
-  encoding <- NULL
-
-  # add template
-  args <- c("--template",
-            pandoc_path_arg(
-              system.file(
-                "rmarkdown/templates/teachr_chapter/resources/chapter.html",
-                package = "teachr", mustWork = TRUE
-              )
-            )
-  )
-
-
-  # post-knit
-  post_knit <- function(metadata, input_file, runtime, encoding, ...) {
-
-    # save encoding
-    encoding <<- encoding
-
-    # run R code in metadata
-    metadata <- eval_metadata(metadata)
-
-    # pandoc args
-    args <- c()
-
-    # compute knitr output file
-    output_file <- file_with_meta_ext(input_file, "knit", "md")
-
-    # normalize site config and see if we are in a collection
-    site_config <<- site_config(input_file, encoding)
-    if (is.null(site_config)) {
-
-      # default site_config to empty
-      site_config <<- list()
-    }
-
-    # # header includes: distill then user
-    # in_header <- c(metadata_in_header(site_config, metadata, self_contained),
-    #                citation_references_in_header(input_file, metadata$bibliography),
-    #                metadata_json,
-    #                manifest_in_header(site_config, input_file, metadata, self_contained),
-    #                navigation_in_header_file(site_config),
-    #                distill_in_header_file(theme))
-    #
-    # # before body includes: distill then user
-    # before_body <- c(front_matter_before_body(metadata),
-    #                  navigation_before_body_file(dirname(input_file), site_config),
-    #                  site_before_body_file(site_config),
-    #                  metadata_includes$before_body,
-    #                  listing$html)
-    #
-    # # after body includes: user then distill
-    # after_body <- c(metadata_includes$after_body,
-    #                 site_after_body_file(site_config),
-    #                 appendices_after_body_file(input_file, site_config, metadata),
-    #                 navigation_after_body_file(dirname(input_file), site_config))
-    #
-    # # populate args
-    # args <- c(args,  pandoc_include_args(
-    #   in_header = in_header,
-    #   before_body = before_body,
-    #   after_body = after_body
-    # ))
-
-    # return args
-    args
-
-  }
-
-  pre_processor <- function(yaml_front_matter, utf8_input, runtime, knit_meta,
-                            files_dir, output_dir, ...) {
-    pandoc_include_args(in_header = c(site_in_header_file(site_config),
-                                      metadata_includes$in_header))
+  post_processor <- function(front_matter, input, output_file, ...) {
+    # Add front matter to md file
+    front_matter$output <- NULL
+    xfun::write_utf8(
+      c(
+        "---",
+        yaml::as.yaml(front_matter),
+        "---",
+        xfun::read_utf8(output_file)
+      ),
+      output_file
+    )
+    output_file
   }
 
   on_exit <- function() {
@@ -105,13 +43,13 @@ teachr_chapter <- function(self_contained = TRUE,
   # return format
   output_format(
     knitr = knitr_options(),
-    pandoc = pandoc_options(to = "html5", args = args),
+    pandoc = pandoc_options(to = "markdown_strict", ext = ".md"),# args = c("-f", "raw_html")),
     keep_md = keep_md,
     clean_supporting = self_contained,
     # post_knit = post_knit,
-    # pre_processor = pre_processor,
+    post_processor = post_processor,
     on_exit = on_exit,
-    base_format = html_document_base(
+    base_format = rmarkdown::md_document(
       # pandoc_args = pandoc_args,
       ...
     )
