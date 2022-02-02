@@ -27,7 +27,7 @@ mc_opts <- function(..., correct = NULL) {
     }
     out <- c(out, "</div>")
   } else {
-    out <- '<choice>'
+    out <- glue::glue('<choice id={runif(1L)}>')
     for(i in seq_along(messages)) {
       answer <- ifelse(i==correct, 'correct="true"', '')
       out <- c(out, glue::glue('<opt text="{text[i]}" {answer}>'), messages[i], '</opt>')
