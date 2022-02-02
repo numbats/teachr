@@ -2,7 +2,7 @@
 % Please edit documentation in R/chapter.R
 \name{teachr_chapter}
 \alias{teachr_chapter}
-\title{R Markdown format for Distill articles}
+\title{R Markdown format for course-starter chapter}
 \usage{
 teachr_chapter(
   self_contained = TRUE,
@@ -59,10 +59,6 @@ additional details.}
 base R Markdown HTML output formatter \code{\link[rmarkdown]{html_document_base}}}
 }
 \description{
-Scientific and technical writing, native to the web.
-}
-\details{
-Distill articles feature attractive, reader-friendly typography, flexible
-layout options for visualizations, and full support for footnotes and
-citations.
+Generates the md output suitable for producing chapters in the
+ines/course-starter template.
 }
