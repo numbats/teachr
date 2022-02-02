@@ -25,7 +25,12 @@ teachr_slides <- function(self_contained = TRUE,
         "---",
         yaml::as.yaml(list(title = front_matter$title, type = "slides")),
         "---",
-        xfun::read_utf8(output_file)
+        gsub(
+          # Quick hack to fix slide seperators
+          "^------+$",
+          "---",
+          xfun::read_utf8(output_file)
+        )
       ),
       output_file
     )
