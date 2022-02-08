@@ -25,6 +25,9 @@ teachr_engine <- function(options) {
 
   # If ran outside of a knit, run the solution code.
   if(is.null(getOption('knitr.in.progress'))) {
+    # Don't look! To fix this properly (safely), start up a new R session and load testthat to run code in.
+    library(testthat)
+
     options$code <- solution
     # Run R code as usual
     out <- knitr::knit_engines$get("R")(options)
