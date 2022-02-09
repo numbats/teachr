@@ -56,7 +56,7 @@ teachr_cloze <- function(self_contained = TRUE,
       "Meta-information",
       "========",
       "extype: cloze",
-      paste("exsolution:", paste0("`r ", do.call(rbind, cloze_sol)[,3], "`", collapse = "|")),
+      "exsolution: `r paste0(do.call(c, teachr:::cloze_table$list()), collapse = '|')`",
       paste("exclozetype:", paste0(vapply(cloze_table$list(), function(x) cloze_type(x), character(1L)), collapse = "|")),
       paste("exname:", xfun::sans_ext(basename(input))),
       "extol: 0.05"
