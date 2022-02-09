@@ -18,8 +18,10 @@ teachr_cloze <- function(self_contained = TRUE,
                          pandoc_args = NULL,
                          ...) {
   pre_knit <- function(input, ...) {
-    # Get cloze types
+    # Parse yaml
+    front_matter <- rmarkdown::yaml_front_matter(input)
 
+    # Get cloze types
     ## Replace cloze inline chunks with `r cloze()` functions
     cloze_pattern <- "(?<!(^|\n)``)`cloze[ #]([^`]+)\\s*`"
     cloze_rmd <- stringr::str_replace_all(
@@ -58,13 +60,13 @@ teachr_cloze <- function(self_contained = TRUE,
       "exsolution: `r paste0(do.call(c, teachr:::cloze_table$list()), collapse = '|')`",
       paste("exclozetype:", paste0(vapply(cloze_table$list(), function(x) cloze_type(x), character(1L)), collapse = "|")),
       paste("exname:", xfun::sans_ext(basename(input))),
-      "extol: 0.05"
+      paste("extol:", front_matter$tolerance%||%0.05)
     )
     xfun::write_utf8(exams_rmd, tmp <- tempfile(fileext = ".Rmd"))
 
     file_nm <- xfun::sans_ext(basename(input))
     exams::exams2moodle(
-      tmp, name = file_nm, stitle = file_nm
+      tmp, name = file_nm, stitle = file_nm, n = front_matter$times
     )
 
     # Fix bug with exams package producing empty 2-deep list on first question
