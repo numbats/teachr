@@ -36,7 +36,21 @@ teachr_slides <- function(self_contained = TRUE,
       ),
       output_file
     )
+
     output_file
+  }
+
+  post_knit <- function(front_matter, knit_input, runtime, encoding = "UTF-8") {
+    if(is.null(front_matter$chapter)) stop("You must specify `chapter: <your_chapter_number>` in the YAML.")
+
+    # Copy figures to static folder
+    fig_path <- knitr::opts_chunk$get("fig.path")
+    xfun::dir_create(
+      ch_path <- file.path("..", "static", paste0("chapter", front_matter$chapter), dirname(fig_path))
+    )
+
+    file.copy(fig_path, ch_path, recursive = TRUE)
+    NULL
   }
 
   on_exit <- function() {
@@ -49,6 +63,7 @@ teachr_slides <- function(self_contained = TRUE,
     pandoc = pandoc_options(to = "markdown+raw_tex", ext = ".md"),
     keep_md = keep_md,
     clean_supporting = self_contained,
+    post_knit = post_knit,
     post_processor = post_processor,
     on_exit = on_exit,
     base_format = rmarkdown::md_document(
