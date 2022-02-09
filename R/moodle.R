@@ -29,7 +29,6 @@ teachr_cloze <- function(self_contained = TRUE,
     )
     cloze_sol <- stringr::str_match_all(readLines(input),cloze_pattern)
 
-
     cloze_table$reset()
     knitr::knit(output = tempfile(), text = cloze_rmd, envir = new.env())
 
@@ -79,6 +78,7 @@ teachr_cloze <- function(self_contained = TRUE,
       out_file
     )
 
+    exams::exams2html(tmp, name = file_nm)
     stop("Done! This error is a quick hack to stop render() proceeding pointlessly.")
   }
 
