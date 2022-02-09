@@ -44,7 +44,7 @@ teachr_slides <- function(self_contained = TRUE,
   # return format
   output_format(
     knitr = knitr_options(),
-    pandoc = pandoc_options(to = "markdown_strict", ext = ".md"),
+    pandoc = pandoc_options(to = "markdown+raw_tex", ext = ".md"),
     keep_md = keep_md,
     clean_supporting = self_contained,
     post_processor = post_processor,
