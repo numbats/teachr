@@ -19,18 +19,20 @@ teachr_slides <- function(self_contained = TRUE,
                            pandoc_args = NULL,
                            ...) {
   post_processor <- function(front_matter, input, output_file, ...) {
+    body <- xfun::read_utf8(output_file)
+    # Quick hack to fix slide seperators
+    body <- gsub("^------+$", "---", body)
+    # Replace escaped HTML language chunks
+    body <- gsub("`(.+?)`\\{=html\\}", "\\1", body)
+
     # Add front matter to md file
     xfun::write_utf8(
       c(
         "---",
         yaml::as.yaml(list(title = front_matter$title, type = "slides")),
         "---",
-        gsub(
-          # Quick hack to fix slide seperators
-          "^------+$",
-          "---",
-          xfun::read_utf8(output_file)
-        )
+        body
+
       ),
       output_file
     )
