@@ -3,6 +3,7 @@
 export(cloze)
 export(codeblock)
 export(mc_opts)
+export(mchoice)
 export(schoice)
 export(slides)
 export(teachr_chapter)

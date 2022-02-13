@@ -20,6 +20,7 @@ teachr_cloze <- function(self_contained = TRUE,
   pre_knit <- function(input, ...) {
     # Parse yaml
     front_matter <- rmarkdown::yaml_front_matter(input)
+    keep_rmd <- front_matter$keep_rmd %||% FALSE
 
     # Get cloze types
     ## Replace cloze inline chunks with `r cloze()` functions
@@ -63,11 +64,14 @@ teachr_cloze <- function(self_contained = TRUE,
       paste("exname:", xfun::sans_ext(basename(input))),
       paste("extol:", front_matter$tolerance%||%0.05)
     )
-    xfun::write_utf8(exams_rmd, tmp <- tempfile(fileext = ".Rmd"))
+    input_fn <- ifelse(keep_rmd,
+                       paste0(xfun::sans_ext(basename(input)), "-tmp.Rmd"),
+                       tempfile(fileext = ".Rmd"))
+    xfun::write_utf8(exams_rmd, input_fn)
 
     file_nm <- xfun::sans_ext(basename(input))
     exams::exams2moodle(
-      tmp, name = file_nm, stitle = file_nm, n = front_matter$times
+      input_fn, name = file_nm, stitle = file_nm, n = front_matter$times
     )
 
     # Fix bug with exams package producing empty 2-deep list on first question
@@ -81,7 +85,7 @@ teachr_cloze <- function(self_contained = TRUE,
       out_file
     )
 
-    exams::exams2html(tmp, name = file_nm)
+    exams::exams2html(input_fn, name = file_nm)
     stop("Done! This error is a quick hack to stop render() proceeding pointlessly.")
   }
 
@@ -194,9 +198,14 @@ schoice <- function(opts, sol) {
 #' Use this function in a cloze inline chunk to describe a single choice
 #' question.
 #'
+#' Note: this is only supported for exams 2.4. CRAN version is at 2.3-6.
+#' Install the latest from R-Forge.
+#' `install.packages("exams", repos = "http://R-Forge.R-project.org")`
+#'
 #' @param opts The options to choose from (character vector)
 #' @param sol The correct solution (the correct value from `opts`, or the
 #' position of the correct value)
+#' @export
 mchoice <- function(opts, sol) {
   if(is.character(sol)) sol <- match(sol, opts)
   sol_code <- rep_along(opts, "0")
