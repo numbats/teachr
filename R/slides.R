@@ -48,8 +48,13 @@ teachr_slides <- function(self_contained = TRUE,
     xfun::dir_create(
       ch_path <- file.path("..", "static", paste0("chapter", front_matter$chapter), dirname(fig_path))
     )
-
+    xfun::dir_create(
+      static_path <- file.path("..", "static", dirname(fig_path))
+    )
+    # it seems that local dev refers to images within chapter folder (e.g. chapter6/fig1.png) but the online one
+    # doesn't (so fig1.png is fine).
     file.copy(fig_path, ch_path, recursive = TRUE)
+    file.copy(fig_path, static_path, recursive = TRUE)
     NULL
   }
 
