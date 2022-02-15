@@ -23,7 +23,7 @@ teachr_slides <- function(self_contained = TRUE,
     # Quick hack to fix slide seperators
     body <- gsub("^------+$", "---", body)
     # Replace escaped HTML language chunks
-    body <- gsub("`(.+?)`\\{=html\\}", "\\1", body)
+    #body <- gsub("`(.+?)`\\{=html\\}", "\\1", body)
 
     # Add front matter to md file
     xfun::write_utf8(
@@ -60,7 +60,7 @@ teachr_slides <- function(self_contained = TRUE,
   # return format
   output_format(
     knitr = knitr_options(),
-    pandoc = pandoc_options(to = "markdown+raw_tex-simple_tables", ext = ".md"),
+    pandoc = pandoc_options(to = "markdown+raw_tex-simple_tables-raw_attribute", ext = ".md"),
     keep_md = keep_md,
     clean_supporting = self_contained,
     post_knit = post_knit,
