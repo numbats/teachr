@@ -17,14 +17,14 @@ teachr_engine <- function(options) {
 
   # Add default starter code substitutes
   code$code <- gsub(
-    paste0(options[[".open"]]%||%"\\{<","([^🎯]+)",options[[".close"]]%||%">\\}"),
+    paste0(options[[".open"]]%||%"\\{<","([^🎯]+?)",options[[".close"]]%||%">\\}"),
     paste0(options[[".open"]]%||%"\\{<","\\1🎯___",options[[".close"]]%||%">\\}"),
     code$code
   )
 
   # Separate solutions from starter
   solution_patterns <- list(
-    inline = paste0(options[[".open"]]%||%"\\{<","([^🎯]+)🎯?(.*?)",options[[".close"]]%||%">\\}")
+    inline = paste0(options[[".open"]]%||%"\\{<","([^🎯]+?)🎯?(.*?)",options[[".close"]]%||%">\\}")
   )
   starter <- gsub(solution_patterns$inline, "\\2", code$code)
   solution <- gsub(solution_patterns$inline, "\\1", code$code)
