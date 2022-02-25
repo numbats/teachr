@@ -40,7 +40,7 @@ teachr_chapter <- function(self_contained = TRUE,
   # return format
   output_format(
     knitr = knitr_options(),
-    pandoc = pandoc_options(to = "markdown", ext = ".md"),# args = c("-f", "raw_html")),
+    pandoc = pandoc_options(to = "markdown-simple_tables-raw_attribute-native_divs-native_spans-fenced_divs-bracketed_spans", ext = ".md"),# args = c("-f", "raw_html")),
     keep_md = keep_md,
     clean_supporting = self_contained,
     # post_knit = post_knit,
