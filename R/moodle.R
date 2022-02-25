@@ -71,7 +71,11 @@ teachr_cloze <- function(self_contained = TRUE,
 
     file_nm <- xfun::sans_ext(basename(input))
     exams::exams2moodle(
-      input_fn, name = file_nm, stitle = file_nm, n = front_matter$times
+      input_fn, name = front_matter$topic%||%file_nm, stitle = file_nm, n = front_matter$times,
+    )
+    file.rename(
+      xfun::with_ext(front_matter$topic%||%file_nm, ".xml"),
+      xfun::with_ext(input, ".xml")
     )
 
     # Fix bug with exams package producing empty 2-deep list on first question
